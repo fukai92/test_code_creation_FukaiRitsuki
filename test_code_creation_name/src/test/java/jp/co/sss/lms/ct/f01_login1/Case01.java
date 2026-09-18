@@ -35,7 +35,9 @@ public class Case01 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
+		//URLへ画面遷移する
 		goTo("http://localhost:8080/lms/");
+		//エビデンス取得
 		getEvidence(new Object(){}, "テスト01");
 		
 	}

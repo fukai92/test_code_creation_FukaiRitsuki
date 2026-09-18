@@ -36,7 +36,9 @@ public class Case02 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
+		//URLへ画面遷移する
 		goTo("http://localhost:8080/lms/");
+		//エビデンス取得
 		getEvidence(new Object(){}, "テスト01");
 	}
 
@@ -44,16 +46,14 @@ public class Case02 {
 	@Order(2)
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() {
-        goTo("http://localhost:8080/lms/");
-
-        
-        webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
+        //DBにないIDとパスワードを入力
+        webDriver.findElement(By.name("loginId")).sendKeys("StdAA01");
         webDriver.findElement(By.name("password")).sendKeys("SSSSSSAA01");
-
+        //ログインボタンをクリック
         webDriver.findElement(By.cssSelector("input[type='submit']")).click();
-        
+        //エラーメッセージを出力する時間の確保
         visibilityTimeout(By.className("error"), 5);
-
+        //エビデンス取得
         getEvidence(new Object(){}, "テスト02");
     }
 
