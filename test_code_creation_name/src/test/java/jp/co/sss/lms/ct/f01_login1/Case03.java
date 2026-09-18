@@ -9,6 +9,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
 
 /**
  * 結合テスト ログイン機能①
@@ -35,14 +36,25 @@ public class Case03 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+		//URLへ画面遷移する
+				goTo("http://localhost:8080/lms/");
+				//エビデンス取得
+				getEvidence(new Object(){}, "テスト01");
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
+		//DBにあるIDとパスワードを入力
+        webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
+        webDriver.findElement(By.name("password")).sendKeys("StudentAA01");
+        //ログインボタンをクリック
+        webDriver.findElement(By.cssSelector("input[type='submit']")).click();
+        //エビデンス取得
+		getEvidence(new Object(){}, "テスト02");
 	}
+
+
 
 }
