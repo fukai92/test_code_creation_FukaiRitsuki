@@ -42,7 +42,7 @@ public class Case01 {
 		//タイトルエビデンス取得
 		String evidenceTitle = "ログイン | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
-		//ボタン表示エビデンス取得
+		//ログインボタン表示エビデンス取得
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[type='submit']")).isDisplayed();
 		assertTrue(evidenceButton);
 		//エビデンス証跡取得

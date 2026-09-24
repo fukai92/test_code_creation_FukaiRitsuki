@@ -37,11 +37,15 @@ public class Case02 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		//URLへ画面遷移する
-		String evidenceUrl = "http://localhost:8080/lms/";
-		goTo(evidenceUrl);
+		//トップページへアクセス
+		goTo("http://localhost:8080/lms/");
+		//タイトルエビデンス取得
+		String evidenceTitle = "ログイン | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+		//ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[type='submit']")).isDisplayed();
+		assertTrue(evidenceButton);
 		//エビデンス証跡取得
-		assertEquals(evidenceUrl, webDriver.getCurrentUrl());
 		getEvidence(new Object(){}, "テスト01");
 	}
 
@@ -56,13 +60,16 @@ public class Case02 {
         webDriver.findElement(By.cssSelector("input[type='submit']")).click();
         //エラーメッセージを出力する時間の確保
         visibilityTimeout(By.className("error"), 5);
-        //URLエビデンス取得
-        String evidenceUrl = webDriver.getCurrentUrl();
-        assertTrue(evidenceUrl.contains("http://localhost:8080/lms/login"));
         //エラーメッセージのエビデンス取得
         String evidenceMessage = "* ログインに失敗しました。";
         String actualMessage = webDriver.findElement(By.className("error")).getText();
         assertEquals(evidenceMessage, actualMessage);
+        //タイトルエビデンス取得
+      	String evidenceTitle = "ログイン | LMS";
+      	assertEquals(evidenceTitle, webDriver.getTitle());
+      	//ログインボタン表示エビデンス取得
+      	boolean evidenceButton = webDriver.findElement(By.cssSelector("input[type='submit']")).isDisplayed();
+      	assertTrue(evidenceButton);
         //エビデンス証跡取得
         getEvidence(new Object(){}, "テスト02");
     }
