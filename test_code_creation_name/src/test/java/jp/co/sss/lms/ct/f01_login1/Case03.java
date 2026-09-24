@@ -53,7 +53,7 @@ public class Case03 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		//DBにないIDとパスワードを入力
+		//DBにあるIDとパスワードを入力
         webDriver.findElement(By.name("loginId")).sendKeys("StudentAA03");
         webDriver.findElement(By.name("password")).sendKeys("StudentAA03");
         //ログインボタンをクリック
