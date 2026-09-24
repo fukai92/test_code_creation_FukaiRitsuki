@@ -53,7 +53,7 @@ public class Case04 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		//DBにないIDとパスワードを入力
+		//DBにあるIDとパスワードを入力
         webDriver.findElement(By.name("loginId")).sendKeys("StudentAA03");
         webDriver.findElement(By.name("password")).sendKeys("StudentAA03");
         //ログインボタンをクリック
@@ -74,7 +74,21 @@ public class Case04 {
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-		// TODO ここに追加
+		//ヘッダーにある「機能」をクリック
+		webDriver.findElement(By.linkText("機能")).click();
+		//「機能」にある「ヘルプ」が表示させるまでの時間確保
+		visibilityTimeout(By.linkText("ヘルプ"), 5);
+		//「機能」にある「ヘルプ」をクリック
+		webDriver.findElement(By.linkText("ヘルプ")).click();
+		//タイトルエビデンス取得
+		String evidenceTitle = "ヘルプ | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+		//見出しエビデンス取得
+		String evidenceHeading = "ヘルプ";
+		String actualHeading = webDriver.findElement(By.tagName("h2")).getText();
+		assertEquals(evidenceHeading, actualHeading);
+		 //エビデンス証跡取得
+        getEvidence(new Object(){}, "テスト03");
 	}
 
 	@Test
