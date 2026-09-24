@@ -140,14 +140,39 @@ public class Case05 {
 	@Order(5)
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
 	void test05() {
-		// TODO ここに追加
+		//キーワード欄に「キャンセル」と入力
+		String searchKeyword = "キャンセル";
+		webDriver.findElement(By.id("form")).clear();
+		webDriver.findElement(By.id("form")).sendKeys(searchKeyword);
+
+		// 「検索」ボタンをクリック
+		webDriver.findElement(By.cssSelector("input[value='検索']")).click();
+
+		// 検索結果が表示されるまで待機
+		visibilityTimeout(By.cssSelector("input[value='検索']"), 5);
+		
+		
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト05");
 	}
 	
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 「クリア」ボタン押下で入力したキーワードを消去")
 	void test06() {
-		// TODO ここに追加
+		//キーワード欄に「キャンセル」と入力
+		webDriver.findElement(By.id("form")).clear();
+		webDriver.findElement(By.id("form")).sendKeys("キャンセル");
+
+		//「クリア」ボタンをクリック
+		webDriver.findElement(By.cssSelector("input[value='クリア']")).click();
+
+	    //キーワード欄が空欄かどうかのエビデンス取得
+		String inputValue = webDriver.findElement(By.id("form")).getAttribute("value");
+		assertEquals("", inputValue);
+
+		// エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト06");
 	}
 
 }
