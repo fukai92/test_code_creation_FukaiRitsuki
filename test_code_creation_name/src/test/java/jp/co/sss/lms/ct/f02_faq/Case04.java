@@ -95,7 +95,18 @@ public class Case04 {
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
-		// TODO ここに追加
+		//「よくある質問」リンクをクリック
+		webDriver.findElement(By.linkText("よくある質問"));
+		//よくある質問にある「検索」ボタン表示させるまでの時間確保
+		visibilityTimeout(By.cssSelector("input[value='検索']"), 5);
+		//タイトルエビデンス取得
+		String evidenceTitle = "よくある質問 | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+		//検索ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='検索']")).isDisplayed();
+      	assertTrue(evidenceButton);
+      	//エビデンス証跡取得
+      	getEvidence(new Object(){}, "テスト04");
 	}
 
 }
