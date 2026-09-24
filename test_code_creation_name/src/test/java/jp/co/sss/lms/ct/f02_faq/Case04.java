@@ -3,6 +3,8 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -39,12 +41,15 @@ public class Case04 {
 	void test01() {
 		//トップページへアクセス
 		goTo("http://localhost:8080/lms/");
+		
 		//タイトルエビデンス取得
 		String evidenceTitle = "ログイン | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
+		
 		//ボタン表示エビデンス取得
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[type='submit']")).isDisplayed();
 		assertTrue(evidenceButton);
+		
 		//エビデンス証跡取得
 		getEvidence(new Object(){}, "テスト01");
 	}
@@ -56,16 +61,21 @@ public class Case04 {
 		//DBにあるIDとパスワードを入力
         webDriver.findElement(By.name("loginId")).sendKeys("StudentAA03");
         webDriver.findElement(By.name("password")).sendKeys("StudentAA03");
+        
         //ログインボタンをクリック
         webDriver.findElement(By.cssSelector("input[type='submit']")).click();
+        
         //コース詳細にある詳細ボタン表示までの時間確保
         visibilityTimeout(By.cssSelector("input[value='詳細']"), 5);
+        
         //タイトルエビデンス取得
       	String evidenceTitle = "コース詳細 | LMS";
       	assertEquals(evidenceTitle, webDriver.getTitle());
+      	
       	//各セクション詳細ボタン表示エビデンス取得
       	boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='詳細']")).isDisplayed();
       	assertTrue(evidenceButton);
+      	
         //エビデンス証跡取得
         getEvidence(new Object(){}, "テスト02");
 	}
@@ -76,17 +86,22 @@ public class Case04 {
 	void test03() {
 		//ヘッダーにある「機能」をクリック
 		webDriver.findElement(By.linkText("機能")).click();
+		
 		//「機能」にある「ヘルプ」が表示させるまでの時間確保
 		visibilityTimeout(By.linkText("ヘルプ"), 5);
+		
 		//「機能」にある「ヘルプ」をクリック
 		webDriver.findElement(By.linkText("ヘルプ")).click();
+		
 		//タイトルエビデンス取得
 		String evidenceTitle = "ヘルプ | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
+		
 		//見出しエビデンス取得
 		String evidenceHeading = "ヘルプ";
 		String actualHeading = webDriver.findElement(By.tagName("h2")).getText();
 		assertEquals(evidenceHeading, actualHeading);
+		
 		 //エビデンス証跡取得
         getEvidence(new Object(){}, "テスト03");
 	}
@@ -96,15 +111,27 @@ public class Case04 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 		//「よくある質問」リンクをクリック
-		webDriver.findElement(By.linkText("よくある質問"));
+		webDriver.findElement(By.linkText("よくある質問")).click();
+		
+		//クリック前のタブIDを取得
+		String originalWindow = webDriver.getWindowHandle();
+		// ブラウザで開いているすべてのタブID一覧を取得し、元のタブを削除
+		Set<String> handles = webDriver.getWindowHandles();
+		handles.remove(originalWindow);
+		//新しいタブへ操作を切り替える
+	    webDriver.switchTo().window(handles.iterator().next());
+	    
 		//よくある質問にある「検索」ボタン表示させるまでの時間確保
 		visibilityTimeout(By.cssSelector("input[value='検索']"), 5);
+		
 		//タイトルエビデンス取得
 		String evidenceTitle = "よくある質問 | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
+		
 		//検索ボタン表示エビデンス取得
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='検索']")).isDisplayed();
       	assertTrue(evidenceButton);
+      	
       	//エビデンス証跡取得
       	getEvidence(new Object(){}, "テスト04");
 	}
