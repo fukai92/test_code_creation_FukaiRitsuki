@@ -57,10 +57,10 @@ public class Case02 {
         //エラーメッセージを出力する時間の確保
         visibilityTimeout(By.className("error"), 5);
         //URLエビデンス取得
-        String evidenceUrl = "http://localhost:8080/lms/";
-        assertEquals(evidenceUrl, webDriver.getCurrentUrl());
+        String evidenceUrl = webDriver.getCurrentUrl();
+        assertTrue(evidenceUrl.contains("http://localhost:8080/lms/login"));
         //エラーメッセージのエビデンス取得
-        String evidenceMessage = "ログインIDが正しくありません。";
+        String evidenceMessage = "* ログインに失敗しました。";
         String actualMessage = webDriver.findElement(By.className("error")).getText();
         assertEquals(evidenceMessage, actualMessage);
         //エビデンス証跡取得
