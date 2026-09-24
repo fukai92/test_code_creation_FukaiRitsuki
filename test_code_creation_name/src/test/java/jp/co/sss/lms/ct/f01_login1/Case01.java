@@ -10,6 +10,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
 
 /**
  * 結合テスト ログイン機能①
@@ -36,11 +37,15 @@ public class Case01 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		//URLへ画面遷移する
-		String evidenceUrl = "http://localhost:8080/lms/";
-		goTo(evidenceUrl);
+		//トップページへアクセス
+		goTo("http://localhost:8080/lms/");
+		//タイトルエビデンス取得
+		String evidenceTitle = "ログイン | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+		//ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[type='submit']")).isDisplayed();
+		assertTrue(evidenceButton);
 		//エビデンス証跡取得
-		assertEquals(evidenceUrl, webDriver.getCurrentUrl());
 		getEvidence(new Object(){}, "テスト01");
 		
 	}
