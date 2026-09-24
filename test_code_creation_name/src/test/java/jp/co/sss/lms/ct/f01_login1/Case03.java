@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -36,9 +37,15 @@ public class Case03 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		//URLへ画面遷移する
+		//トップページへアクセス
 				goTo("http://localhost:8080/lms/");
-				//エビデンス取得
+				//タイトルエビデンス取得
+				String evidenceTitle = "ログイン | LMS";
+				assertEquals(evidenceTitle, webDriver.getTitle());
+				//ボタン表示エビデンス取得
+				boolean evidenceButton = webDriver.findElement(By.cssSelector("input[type='submit']")).isDisplayed();
+				assertTrue(evidenceButton);
+				//エビデンス証跡取得
 				getEvidence(new Object(){}, "テスト01");
 	}
 
@@ -46,13 +53,21 @@ public class Case03 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		//DBにあるIDとパスワードを入力
-        webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
-        webDriver.findElement(By.name("password")).sendKeys("StudentAA01");
+		//DBにないIDとパスワードを入力
+        webDriver.findElement(By.name("loginId")).sendKeys("StudentAA03");
+        webDriver.findElement(By.name("password")).sendKeys("StudentAA03");
         //ログインボタンをクリック
         webDriver.findElement(By.cssSelector("input[type='submit']")).click();
-        //エビデンス取得
-		getEvidence(new Object(){}, "テスト02");
+        //コース詳細にある詳細ボタン表示までの時間確保
+        visibilityTimeout(By.cssSelector("input[value='詳細']"), 5);
+        //タイトルエビデンス取得
+      	String evidenceTitle = "コース詳細 | LMS";
+      	assertEquals(evidenceTitle, webDriver.getTitle());
+      	//各セクション詳細ボタン表示エビデンス取得
+      	boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='詳細']")).isDisplayed();
+      	assertTrue(evidenceButton);
+        //エビデンス証跡取得
+        getEvidence(new Object(){}, "テスト02");
 	}
 
 
