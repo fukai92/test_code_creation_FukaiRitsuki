@@ -38,7 +38,19 @@ public class Case05 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+		//トップページへアクセス
+		goTo("http://localhost:8080/lms/");
+				
+		//タイトルエビデンス取得
+		String evidenceTitle = "ログイン | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+				
+		//ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[type='submit']")).isDisplayed();
+		assertTrue(evidenceButton);
+				
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト01");
 	}
 
 	@Test
