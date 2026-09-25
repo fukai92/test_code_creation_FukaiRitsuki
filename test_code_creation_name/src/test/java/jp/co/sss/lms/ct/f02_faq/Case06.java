@@ -143,7 +143,7 @@ public class Case06 {
 	@DisplayName("テスト05 カテゴリ検索で該当カテゴリの検索結果だけ表示")
 	void test05() {
 		//「研修関係」カテゴリをクリック
-		String categoryName = "研修関係";
+		String categoryName = "【研修関係】";
 		webDriver.findElement(By.linkText(categoryName)).click();
 		
 		//検索結果を表示させるために時間確保
@@ -164,7 +164,22 @@ public class Case06 {
 	@Order(6)
 	@DisplayName("テスト06 検索結果の質問をクリックしその回答を表示")
 	void test06() {
-		// TODO ここに追加
+		// 表示されている1件目の質問文をクリック
+		WebElement question1 = webDriver.findElement(By.cssSelector("dl dt"));
+		question1.click();
+
+		//クリックした質問文に対応する解答を取得
+		WebElement answer = webDriver.findElement(By.cssSelector("dl dd"));
+
+		//class属性が「dn」から「fs18」 に変化したか確認しエビデンス取得
+		String actualClass = answer.getAttribute("class");
+		assertEquals("fs18", actualClass);
+
+		//解答表示エビデンス取得
+		assertTrue(answer.isDisplayed());
+
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト06");
 	}
 
 }
