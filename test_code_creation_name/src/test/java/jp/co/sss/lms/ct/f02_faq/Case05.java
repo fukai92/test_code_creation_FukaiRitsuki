@@ -3,6 +3,7 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.AfterAll;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 
 /**
@@ -151,6 +153,17 @@ public class Case05 {
 		// 検索結果が表示されるまで待機
 		visibilityTimeout(By.cssSelector("input[value='検索']"), 5);
 		
+		//画面に表示されている質問文の一覧から検索結果が１件以上あることのエビデンス取得
+		List<WebElement> questionElements = webDriver.findElements(By.cssSelector("dl dt"));
+		assertTrue(questionElements.size() > 0);
+
+		// 全ての検索結果の質問文に「キャンセル」が含まれていることを検証
+		for (WebElement evidenceElement : questionElements) {
+			assertTrue(evidenceElement.getText().contains(searchKeyword));
+		}
+		
+		//質問文の証跡を取るため下へスクロール
+		scrollBy("1000");
 		
 		//エビデンス証跡取得
 		getEvidence(new Object(){}, "テスト05");
