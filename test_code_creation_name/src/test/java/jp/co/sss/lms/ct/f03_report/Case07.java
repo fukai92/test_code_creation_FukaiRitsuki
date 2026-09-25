@@ -86,14 +86,14 @@ public class Case07 {
 	    By unsubmittedDetailBtn = By.xpath("//tr[td/span[text()='未提出']]//input[@value='詳細']");
 	    webDriver.findElement(unsubmittedDetailBtn).click();
 		
-		//セクション詳細画面にある戻るボタン表示までの時間確保
+		//セクション詳細画面にある「戻る」ボタン表示までの時間確保
 		visibilityTimeout(By.cssSelector("input[value='戻る']"), 5);
 		
 		//タイトルエビデンス取得
 		String evidenceTitle = "セクション詳細 | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
 		
-		//戻るボタン表示エビデンス取得
+		//「戻る」ボタン表示エビデンス取得
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='戻る']")).isDisplayed();
 		assertTrue(evidenceButton);
 		
@@ -106,7 +106,22 @@ public class Case07 {
 	@Order(4)
 	@DisplayName("テスト04 「提出する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-		// TODO ここに追加
+		//「日報【デモ】を提出する」ボタンをクリックする
+		webDriver.findElement(By.cssSelector("input[value*='を提出する']")).click();
+		
+		//レポート登録画面にある「提出する」ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("button[type='submit']"), 5);
+		
+		//タイトルエビデンス取得
+		String evidenceTitle = "レポート登録 | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+		
+		//「提出する」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("button[type='submit']")).isDisplayed();
+		assertTrue(evidenceButton);
+		
+		//エビデンス証跡取得
+		 getEvidence(new Object(){}, "テスト04");
 	}
 
 	@Test
