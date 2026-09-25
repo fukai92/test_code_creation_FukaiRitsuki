@@ -168,16 +168,16 @@ public class Case06 {
 		WebElement question1 = webDriver.findElement(By.cssSelector("dl dt"));
 		question1.click();
 
-		//クリックした質問文に対応する解答を取得
+		//クリックした質問文に対応する回答を取得
 		WebElement answer = webDriver.findElement(By.cssSelector("dl dd"));
 
-		//class属性が「dn」から「fs18」 に変化したか確認しエビデンス取得
-		String actualClass = answer.getAttribute("class");
-		assertEquals("fs18", actualClass);
-
-		//解答表示エビデンス取得
+		//回答表示エビデンス取得
 		assertTrue(answer.isDisplayed());
-
+		
+		//回答に内容が記載しているか検証しエビデンス取得
+		String answerText = answer.getText();
+		assertFalse(answerText.isEmpty());
+		
 		//エビデンス証跡取得
 		getEvidence(new Object(){}, "テスト06");
 	}
