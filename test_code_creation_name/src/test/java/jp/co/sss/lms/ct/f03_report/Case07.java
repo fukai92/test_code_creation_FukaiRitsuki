@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト レポート機能
@@ -97,6 +98,9 @@ public class Case07 {
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='戻る']")).isDisplayed();
 		assertTrue(evidenceButton);
 		
+		//「戻る」ボタン証跡を取るため下へスクロール
+		scrollBy("200");
+				
 		//エビデンス証跡取得
 		 getEvidence(new Object(){}, "テスト03");
 		
@@ -128,7 +132,37 @@ public class Case07 {
 	@Order(5)
 	@DisplayName("テスト05 報告内容を入力して「提出する」ボタンを押下し確認ボタン名が更新される")
 	void test05() {
-		// TODO ここに追加
+		//報告内容を記述
+		WebElement inputText = webDriver.findElement(By.id("content_0"));
+	    inputText.clear();
+	    inputText.sendKeys("本日の研修内容の報告テストです。");
+	    
+	  //「提出」ボタンを押下するため下へスクロール
+	  	scrollBy("500");
+	  	
+	    //「提出する」ボタンをクリックする
+	    webDriver.findElement(By.cssSelector("button[type='submit']")).click();
+	    
+	    //セクション詳細画面にある「戻る」ボタン表示までの時間確保
+	  	visibilityTimeout(By.cssSelector("input[value='戻る']"), 5);
+	  		
+	  	//タイトルエビデンス取得
+	  	String evidenceTitle = "セクション詳細 | LMS";
+	  	assertEquals(evidenceTitle, webDriver.getTitle());
+	  		
+	  	//「戻る」ボタン表示エビデンス取得
+	  	boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='戻る']")).isDisplayed();
+	  	assertTrue(evidenceButton);
+	  	
+	  	//「提出済み日報【デモ】を確認する」ボタン表示エビデンス取得
+	  	boolean evidenceConfirmButton = webDriver.findElement(By.cssSelector("input[value*='提出済み']")).isDisplayed();
+	  	assertTrue(evidenceConfirmButton);
+	  		
+	  	//「戻る」ボタン証跡を取るため下へスクロール
+	  	scrollBy("200");
+      	
+	    //エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト05");
 	}
 
 }
