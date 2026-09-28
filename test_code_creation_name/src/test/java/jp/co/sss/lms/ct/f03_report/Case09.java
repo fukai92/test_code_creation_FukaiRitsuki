@@ -109,7 +109,13 @@ public class Case09 {
 				
 		//「修正する」ボタンをクリック
 		webDriver.findElement(By.cssSelector("input[value='修正する']")).click();
-				
+		
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト04");
+		
+		//「提出する」ボタンが下部にあるためスクロール
+		scrollBy("500");
+		
 		//レポート登録画面にある「提出する」ボタン表示までの時間確保
 		visibilityTimeout(By.cssSelector("button[type='submit']"), 5);
 				
@@ -121,8 +127,7 @@ public class Case09 {
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("button[type='submit']")).isDisplayed();
 		assertTrue(evidenceButton);
 				
-		//エビデンス証跡取得
-		getEvidence(new Object(){}, "テスト04");
+		
 	}
 
 	@Test
