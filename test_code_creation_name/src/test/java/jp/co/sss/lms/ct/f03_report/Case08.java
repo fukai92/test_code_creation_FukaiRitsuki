@@ -87,6 +87,9 @@ public class Case08 {
 	    By unsubmittedDetailBtn = By.xpath("//tr[td/span[text()='提出済み']]//input[@value='詳細']");
 	    webDriver.findElement(unsubmittedDetailBtn).click();
 		
+	    //「戻る」ボタンが下部にあるためスクロール
+	    scrollBy("400");
+	    
 		//セクション詳細画面にある「戻る」ボタン表示までの時間確保
 		visibilityTimeout(By.cssSelector("input[value='戻る']"), 5);
 		
@@ -97,9 +100,6 @@ public class Case08 {
 		//「戻る」ボタン表示エビデンス取得
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='戻る']")).isDisplayed();
 		assertTrue(evidenceButton);
-		
-		//「戻る」ボタン証跡を取るため下へスクロール
-		scrollBy("200");
 				
 		//エビデンス証跡取得
 		 getEvidence(new Object(){}, "テスト03");
