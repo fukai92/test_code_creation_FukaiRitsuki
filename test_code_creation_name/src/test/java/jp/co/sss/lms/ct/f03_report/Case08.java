@@ -165,7 +165,22 @@ public class Case08 {
 	@Order(6)
 	@DisplayName("テスト06 上部メニューの「ようこそ○○さん」リンクからユーザー詳細画面に遷移")
 	void test06() {
-		// TODO ここに追加
+		//ヘッダーにある「ようこそ受講生AA3さん」をクリック
+		webDriver.findElement(By.linkText("機能")).click();
+						
+		//ユーザー詳細画面にある「パスワード変更する」ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("input[value='パスワード変更する']"), 5);
+						
+		//「パスワード変更する」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='パスワード変更する']")).isDisplayed();
+		assertTrue(evidenceButton);
+						
+		//タイトルエビデンス取得
+		String evidenceTitle = "ユーザー詳細";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+						
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト03");
 	}
 
 	@Test
