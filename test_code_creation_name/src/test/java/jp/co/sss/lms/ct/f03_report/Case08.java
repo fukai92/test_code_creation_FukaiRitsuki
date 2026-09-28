@@ -82,7 +82,26 @@ public class Case08 {
 	@Order(3)
 	@DisplayName("テスト03 提出済の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
-		// TODO ここに追加
+		//「提出済」の文字列を含む行の中にある「詳細」ボタンを取得してクリック
+	    By unsubmittedDetailBtn = By.xpath("//tr[td/span[text()='提出済']]//input[@value='詳細']");
+	    webDriver.findElement(unsubmittedDetailBtn).click();
+		
+		//セクション詳細画面にある「戻る」ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("input[value='戻る']"), 5);
+		
+		//タイトルエビデンス取得
+		String evidenceTitle = "セクション詳細 | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+		
+		//「戻る」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='戻る']")).isDisplayed();
+		assertTrue(evidenceButton);
+		
+		//「戻る」ボタン証跡を取るため下へスクロール
+		scrollBy("200");
+				
+		//エビデンス証跡取得
+		 getEvidence(new Object(){}, "テスト03");
 	}
 
 	@Test
