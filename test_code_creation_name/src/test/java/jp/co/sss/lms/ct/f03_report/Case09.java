@@ -97,14 +97,32 @@ public class Case09 {
 		assertEquals(evidenceTitle, webDriver.getTitle());
 								
 		//エビデンス証跡取得
-		getEvidence(new Object(){}, "テスト06");
+		getEvidence(new Object(){}, "テスト03");
 	}
 
 	@Test
 	@Order(4)
 	@DisplayName("テスト04 該当レポートの「修正する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-		// TODO ここに追加
+		//「修正する」ボタンを表示するためスクロール
+		scrollBy("200");
+				
+		//「修正する」ボタンをクリック
+		webDriver.findElement(By.cssSelector("input[value='修正する']")).click();
+				
+		//レポート登録画面にある「提出する」ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("button[type='submit']"), 5);
+				
+		//タイトルエビデンス取得
+		String evidenceTitle = "レポート登録 | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+				
+		//「提出する」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("button[type='submit']")).isDisplayed();
+		assertTrue(evidenceButton);
+				
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト04");
 	}
 
 	@Test
