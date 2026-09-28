@@ -231,8 +231,8 @@ public class Case08 {
 		assertEquals(evidenceImpressionTd, actualImpressionTd);
 		
 		
-		//画面に表示されている所感を取得し修正した文字列と一致しているかエビデンス取得
-		By reviewTd = By.xpath("//th[contains(text(),'所感')]/following-sibling::td");
+		//画面に表示されている一週間の振り返りを取得し修正した文字列と一致しているかエビデンス取得
+		By reviewTd = By.xpath("//th[contains(text(),'一週間の振り返り')]/following-sibling::td");
 		String actualReviewTd = webDriver.findElement(reviewTd).getText().trim();
 		String evidenceReviewTd = "テスト";
 		assertEquals(evidenceReviewTd, actualReviewTd);

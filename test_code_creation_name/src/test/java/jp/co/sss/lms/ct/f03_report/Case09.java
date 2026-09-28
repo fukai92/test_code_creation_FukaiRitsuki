@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト レポート機能
@@ -148,7 +149,16 @@ public class Case09 {
 	@Order(7)
 	@DisplayName("テスト07 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：目標の達成度が数値以外")
 	void test07() {
-		// TODO ここに追加
+		//基準値範囲外の数値を記述
+		WebElement inputTextGoal = webDriver.findElement(By.id("content_0"));
+	    inputTextGoal.clear();
+	    inputTextGoal.sendKeys("11");
+	    
+	    //「提出する」ボタンは下部にあるためスクロール
+	    scrollBy("400");
+	    
+	    //「提出する」ボタンをクリックする
+	    webDriver.findElement(By.cssSelector("button[type='submit']")).click();
 	}
 
 	@Test
