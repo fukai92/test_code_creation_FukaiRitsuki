@@ -231,7 +231,37 @@ public class Case09 {
 	@Order(10)
 	@DisplayName("テスト10 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：所感・一週間の振り返りが2000文字超")
 	void test10() {
-		// TODO ここに追加
+		//所感に「あ」文字を2001字入力
+		String textGoalOver2000 = "あ".repeat(2001);
+		WebElement inputTextGoal = webDriver.findElement(By.id("content_0"));
+		inputTextGoal.clear();
+		inputTextGoal.sendKeys(textGoalOver2000);
+				
+		//一週間の振り返りに「あ」文字を2001字入力
+		String textReviewOver2000 = "あ".repeat(2001);
+		WebElement inputTextReview = webDriver.findElement(By.id("content_1"));
+		inputTextReview.clear();
+		inputTextReview.sendKeys(textReviewOver2000);
+			    
+		//「提出する」ボタンは下部にあるためスクロール
+		scrollBy("400");
+							    
+		//「提出する」ボタンをクリックする
+		webDriver.findElement(By.cssSelector("button[type='submit']")).click();
+				
+		//タイトルエビデンス取得
+		String evidenceTitle = "レポート登録 | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+
+		//エラー出力エビデンス取得
+		assertTrue(inputTextGoal.getAttribute("class").contains("errorInput"));
+		assertTrue(inputTextReview.getAttribute("class").contains("errorInput"));
+		
+		//エラー部分を取得したいため下部へスクロール
+		scrollBy("200");
+		
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト10");
 	}
 
 }
