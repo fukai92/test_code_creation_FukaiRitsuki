@@ -165,7 +165,7 @@ public class Case09 {
 		assertEquals(evidenceTitle, webDriver.getTitle());
 
 	    //エラー出力エビデンス取得
-	    assertTrue(inputTextGoal.getAttribute("class").contains("error"));
+	    assertTrue(inputTextGoal.getAttribute("class").contains("errorInput"));
 	    
 	    //エビデンス証跡取得
 	    getEvidence(new Object(){}, "テスト07");
@@ -185,6 +185,16 @@ public class Case09 {
 			    
 		//「提出する」ボタンをクリックする
 		webDriver.findElement(By.cssSelector("button[type='submit']")).click();
+		
+		 //タイトルエビデンス取得
+	    String evidenceTitle = "レポート登録 | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+
+	    //エラー出力エビデンス取得
+	    assertTrue(inputTextGoal.getAttribute("class").contains("errorInput"));
+	    
+	    //エビデンス証跡取得
+	    getEvidence(new Object(){}, "テスト08");
 	}
 
 	@Test
