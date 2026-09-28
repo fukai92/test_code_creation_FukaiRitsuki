@@ -165,7 +165,16 @@ public class Case09 {
 	@Order(8)
 	@DisplayName("テスト08 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：目標の達成度が範囲外")
 	void test08() {
-		// TODO ここに追加
+		//目標の達成度に範囲以外の数値を記述
+		WebElement inputTextGoal = webDriver.findElement(By.id("content_0"));
+		inputTextGoal.clear();
+		inputTextGoal.sendKeys("11");
+			    
+		//「提出する」ボタンは下部にあるためスクロール
+		scrollBy("400");
+			    
+		//「提出する」ボタンをクリックする
+		webDriver.findElement(By.cssSelector("button[type='submit']")).click();
 	}
 
 	@Test
