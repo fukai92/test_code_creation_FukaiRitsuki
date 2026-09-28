@@ -159,6 +159,16 @@ public class Case09 {
 	    
 	    //「提出する」ボタンをクリックする
 	    webDriver.findElement(By.cssSelector("button[type='submit']")).click();
+	    
+	    //タイトルエビデンス取得
+	    String evidenceTitle = "レポート登録 | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+
+	    //エラー出力エビデンス取得
+	    assertTrue(inputTextGoal.getAttribute("class").contains("error"));
+	    
+	    //エビデンス証跡取得
+	    getEvidence(new Object(){}, "テスト07");
 	}
 
 	@Test
@@ -181,7 +191,16 @@ public class Case09 {
 	@Order(9)
 	@DisplayName("テスト09 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：目標の達成度・所感が未入力")
 	void test09() {
-		// TODO ここに追加
+		//目標の達成度に範囲以外の数値を記述
+		WebElement inputTextGoal = webDriver.findElement(By.id("content_0"));
+		inputTextGoal.clear();
+		inputTextGoal.sendKeys("11");
+					    
+		//「提出する」ボタンは下部にあるためスクロール
+		scrollBy("400");
+					    
+		//「提出する」ボタンをクリックする
+		webDriver.findElement(By.cssSelector("button[type='submit']")).click();
 	}
 
 	@Test
