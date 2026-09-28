@@ -86,9 +86,6 @@ public class Case08 {
 		//「提出済み」の文字列を含む行の中にある「詳細」ボタンを取得してクリック
 	    By unsubmittedDetailBtn = By.xpath("//tr[td/span[text()='提出済み']]//input[@value='詳細']");
 	    webDriver.findElement(unsubmittedDetailBtn).click();
-		
-	    //「戻る」ボタンが下部にあるためスクロール
-	    scrollBy("400");
 	    
 		//セクション詳細画面にある「戻る」ボタン表示までの時間確保
 		visibilityTimeout(By.cssSelector("input[value='戻る']"), 5);
@@ -109,15 +106,21 @@ public class Case08 {
 	@Order(4)
 	@DisplayName("テスト04 「確認する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
+		//「提出済み週報【デモ】を確認」ボタンが下部にあるためスクロール
+		scrollBy("400");
+		
 		//「提出済み週報【デモ】を確認する」ボタンをクリックする
 		webDriver.findElement(By.cssSelector("input[value*='を確認する']")).click();
 		
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト04");
+		
 		//「提出する」ボタンが下部にあるためスクロール
-		scrollBy("500");
+		scrollBy("400");
 		
 		//レポート登録画面にある「提出する」ボタン表示までの時間確保
 		visibilityTimeout(By.cssSelector("button[type='submit']"), 5);
-				
+		
 		//タイトルエビデンス取得
 		String evidenceTitle = "レポート登録 | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
@@ -125,9 +128,6 @@ public class Case08 {
 		//「提出する」ボタン表示エビデンス取得
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("button[type='submit']")).isDisplayed();
 		assertTrue(evidenceButton);
-				
-		//エビデンス証跡取得
-		getEvidence(new Object(){}, "テスト04");
 	}
 
 	@Test
@@ -155,12 +155,15 @@ public class Case08 {
 	    //「提出する」ボタンをクリックする
 	    webDriver.findElement(By.cssSelector("button[type='submit']")).click();
 	    
-	    //戻るボタンが下部にあるためスクロール
-	    scrollBy("400");
-	    
+	    //エビデンス証跡取得
+	  	getEvidence(new Object(){}, "テスト05");
+	  	
 	    //セクション詳細画面にある「戻る」ボタン表示までの時間確保
 	  	visibilityTimeout(By.cssSelector("input[value='戻る']"), 5);
-	  		
+	  	
+	  	//「戻る」ボタンが下部にあるためスクロール
+	  	scrollBy("500");
+	  	
 	  	//タイトルエビデンス取得
 	  	String evidenceTitle = "セクション詳細 | LMS";
 	  	assertEquals(evidenceTitle, webDriver.getTitle());
@@ -169,8 +172,7 @@ public class Case08 {
 	  	boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='戻る']")).isDisplayed();
 	  	assertTrue(evidenceButton);
       	
-	    //エビデンス証跡取得
-		getEvidence(new Object(){}, "テスト05");
+	    
 	}
 
 	@Test
@@ -217,20 +219,20 @@ public class Case08 {
 		assertTrue(evidenceButton);
 		
 		//画面に表示されている目標の達成度を取得し修正した文字列と一致しているかエビデンス取得
-		By goalTd = By.xpath("//th[contains(text(),'目標の達成度']/following-sibling::td");
+		By goalTd = By.xpath("//th[contains(text(),'目標の達成度')]/following-sibling::td");
 		String actualGoalTd = webDriver.findElement(goalTd).getText().trim();
 		String evidenceGoalTd = "1";
 		assertEquals(evidenceGoalTd, actualGoalTd);
 		
 		//画面に表示されている所感を取得し修正した文字列と一致しているかエビデンス取得
-		By impressionTd = By.xpath("//th[contains(text(),'所感']/following-sibling::td");
+		By impressionTd = By.xpath("//th[contains(text(),'所感')]/following-sibling::td");
 		String actualImpressionTd = webDriver.findElement(impressionTd).getText().trim();
 		String evidenceImpressionTd = "テスト";
 		assertEquals(evidenceImpressionTd, actualImpressionTd);
 		
 		
 		//画面に表示されている所感を取得し修正した文字列と一致しているかエビデンス取得
-		By reviewTd = By.xpath("//th[contains(text(),'所感']/following-sibling::td");
+		By reviewTd = By.xpath("//th[contains(text(),'所感')]/following-sibling::td");
 		String actualReviewTd = webDriver.findElement(reviewTd).getText().trim();
 		String evidenceReviewTd = "テスト";
 		assertEquals(evidenceReviewTd, actualReviewTd);
