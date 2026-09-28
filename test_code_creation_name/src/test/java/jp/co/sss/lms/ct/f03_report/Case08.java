@@ -166,7 +166,7 @@ public class Case08 {
 	@DisplayName("テスト06 上部メニューの「ようこそ○○さん」リンクからユーザー詳細画面に遷移")
 	void test06() {
 		//ヘッダーにある「ようこそ受講生AA3さん」をクリック
-		webDriver.findElement(By.linkText("機能")).click();
+		webDriver.findElement(By.partialLinkText("ようこそ")).click();
 						
 		//ユーザー詳細画面にある「パスワード変更する」ボタン表示までの時間確保
 		visibilityTimeout(By.cssSelector("input[value='パスワード変更する']"), 5);
@@ -194,18 +194,19 @@ public class Case08 {
 		webDriver.findElement(By.cssSelector("input[value='詳細']")).click();
 		
 		//レポート詳細画面にある「戻る」ボタン表示までの時間確保
-		visibilityTimeout(By.cssSelector("button[onclick*='history.back]"), 5);
+		visibilityTimeout(By.cssSelector("button[onclick*='history.back']"), 5);
 		
 		//タイトルエビデンス取得
 		String evidenceTitle = "レポート詳細 | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
 		
 		//「戻る」ボタン表示エビデンス取得
-		boolean evidenceButton = webDriver.findElement(By.cssSelector("button[onclick*='history.back")).isDisplayed();
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("button[onclick*='history.back']")).isDisplayed();
 		assertTrue(evidenceButton);
 		
 		//画面に表示されている内容を取得し修正した文字列を一致しているかエビデンス取得
-		String actualText = webDriver.findElement(By.cssSelector("table.table-hover td")).getText().trim();
+		By reportContentTd = By.xpath("//h3[text()='報告レポート']/following-sibling::table//td");
+		String actualText = webDriver.findElement(reportContentTd).getText().trim();
 		String evidenceText = "研修内容の報告修正テストです。";
 		assertEquals(evidenceText, actualText);
 		
