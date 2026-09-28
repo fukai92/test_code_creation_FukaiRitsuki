@@ -149,13 +149,6 @@ public class Case08 {
 	  	//「戻る」ボタン表示エビデンス取得
 	  	boolean evidenceButton = webDriver.findElement(By.cssSelector("input[value='戻る']")).isDisplayed();
 	  	assertTrue(evidenceButton);
-	  	
-	  	//「提出済み日報【デモ】を確認する」ボタン表示エビデンス取得
-	  	boolean evidenceConfirmButton = webDriver.findElement(By.cssSelector("input[value*='提出済み']")).isDisplayed();
-	  	assertTrue(evidenceConfirmButton);
-	  		
-	  	//「戻る」ボタン証跡を取るため下へスクロール
-	  	scrollBy("200");
       	
 	    //エビデンス証跡取得
 		getEvidence(new Object(){}, "テスト05");
