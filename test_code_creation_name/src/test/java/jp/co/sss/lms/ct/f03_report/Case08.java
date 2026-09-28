@@ -109,9 +109,12 @@ public class Case08 {
 	@Order(4)
 	@DisplayName("テスト04 「確認する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-		//「提出済み日報【デモ】を確認する」ボタンをクリックする
+		//「提出済み週報【デモ】を確認する」ボタンをクリックする
 		webDriver.findElement(By.cssSelector("input[value*='を確認する']")).click();
-				
+		
+		//「提出する」ボタンが下部にあるためスクロール
+		scrollBy("500");
+		
 		//レポート登録画面にある「提出する」ボタン表示までの時間確保
 		visibilityTimeout(By.cssSelector("button[type='submit']"), 5);
 				
@@ -131,13 +134,29 @@ public class Case08 {
 	@Order(5)
 	@DisplayName("テスト05 報告内容を修正して「提出する」ボタンを押下しセクション詳細画面に遷移")
 	void test05() {
-		//報告内容を記述
-		WebElement inputText = webDriver.findElement(By.id("content_0"));
-	    inputText.clear();
-	    inputText.sendKeys("研修内容の報告修正テストです。");
+		//目標の達成度を記述
+		WebElement inputTextGoal = webDriver.findElement(By.id("content_0"));
+	    inputTextGoal.clear();
+	    inputTextGoal.sendKeys("1");
+	    
+	    //所感を記述
+	    WebElement inputTextImpression = webDriver.findElement(By.id("content_1"));
+	    inputTextImpression.clear();
+	    inputTextImpression.sendKeys("テスト");
+	    
+	    //一週間の振り返りを記述
+	    WebElement inputTextReview = webDriver.findElement(By.id("content_2"));
+	    inputTextReview.clear();
+	    inputTextReview.sendKeys("テスト");
+	    
+	    //「提出する」ボタンが下部にあるためスクロール
+	    scrollBy("500");
 	    
 	    //「提出する」ボタンをクリックする
 	    webDriver.findElement(By.cssSelector("button[type='submit']")).click();
+	    
+	    //戻るボタンが下部にあるためスクロール
+	    scrollBy("400");
 	    
 	    //セクション詳細画面にある「戻る」ボタン表示までの時間確保
 	  	visibilityTimeout(By.cssSelector("input[value='戻る']"), 5);
