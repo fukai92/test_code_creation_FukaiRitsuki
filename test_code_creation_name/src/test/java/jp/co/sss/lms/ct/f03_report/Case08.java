@@ -108,7 +108,22 @@ public class Case08 {
 	@Order(4)
 	@DisplayName("テスト04 「確認する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-		// TODO ここに追加
+		//「提出済み日報【デモ】を確認する」ボタンをクリックする
+		webDriver.findElement(By.cssSelector("input[value*='を確認する']")).click();
+				
+		//レポート登録画面にある「提出する」ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("button[type='submit']"), 5);
+				
+		//タイトルエビデンス取得
+		String evidenceTitle = "レポート登録 | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+				
+		//「提出する」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("button[type='submit']")).isDisplayed();
+		assertTrue(evidenceButton);
+				
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト04");
 	}
 
 	@Test
