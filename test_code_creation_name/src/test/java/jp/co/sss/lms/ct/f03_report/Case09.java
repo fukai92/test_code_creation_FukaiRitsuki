@@ -137,7 +137,6 @@ public class Case09 {
 	void test05() {
 		//理解度に3と入力し学習項目には何も記述しない
 		WebElement intFieldValue = webDriver.findElement(By.id("intFieldValue_0"));
-	    intFieldValue.clear();
 	    intFieldValue.sendKeys("3"); 
 	    
 	    //「提出する」ボタンは下部にあるためスクロール
@@ -154,7 +153,7 @@ public class Case09 {
 	    assertTrue(intFieldValue.getAttribute("class").contains("errorInput"));
 	    
 	    //エビデンス証跡取得
-	    getEvidence(new Object(){}, "テスト06");
+	    getEvidence(new Object(){}, "テスト05");
 	}
 
 	@Test
