@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト 勤怠管理機能
@@ -117,9 +118,10 @@ public class Case10 {
 		String evidenceTitle = "勤怠情報変更｜LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
 						
-		//「出勤」ボタン表示エビデンス取得
-		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[name='punchIn']")).isDisplayed();
-		assertTrue(evidenceButton);
+		//出勤表示エビデンス取得
+		WebElement startTime = webDriver.findElement(By.cssSelector("tr.info td:nth-child(3)"));
+	    String startTimeEvidence = startTime.getText();
+	    assertFalse(startTimeEvidence.isEmpty());
 						
 	    //エビデンス証跡取得
 		getEvidence(new Object(){}, "テスト04");
@@ -143,9 +145,10 @@ public class Case10 {
 		String evidenceTitle = "勤怠情報変更｜LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
 								
-		//「出勤」ボタン表示エビデンス取得
-		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[name='punchIn']")).isDisplayed();
-		assertTrue(evidenceButton);
+		//退勤表示エビデンス取得
+		WebElement endTime = webDriver.findElement(By.cssSelector("tr.info td:nth-child(4)"));
+		String endTimeEvidence = endTime.getText();
+		assertFalse(endTimeEvidence.isEmpty());
 								
 		//エビデンス証跡取得
 		getEvidence(new Object(){}, "テスト05");
