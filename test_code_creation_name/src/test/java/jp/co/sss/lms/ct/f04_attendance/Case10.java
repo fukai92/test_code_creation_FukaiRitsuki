@@ -111,13 +111,16 @@ public class Case10 {
 		//確認ダイアログで「OK」ボタンをクリック
 		webDriver.switchTo().alert().accept();
 		
-		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
-		visibilityTimeout(By.cssSelector("input[name='punchIn']"), 5);
+		//勤怠情報変更画面にある退勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("input[name='punchOut']"), 5);
 		
 		//タイトルエビデンス取得
 		String evidenceTitle = "勤怠情報変更｜LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
-						
+		
+		//テスト当日の日程が下部にあるためスクロール
+		scrollBy("200");
+		
 		//出勤表示エビデンス取得
 		WebElement startTime = webDriver.findElement(By.cssSelector("tr.info td:nth-child(3)"));
 	    String startTimeEvidence = startTime.getText();
@@ -144,6 +147,9 @@ public class Case10 {
 		//タイトルエビデンス取得
 		String evidenceTitle = "勤怠情報変更｜LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
+		
+		//テスト当日の日程が下部にあるためスクロール
+		scrollBy("200");
 								
 		//退勤表示エビデンス取得
 		WebElement endTime = webDriver.findElement(By.cssSelector("tr.info td:nth-child(4)"));
