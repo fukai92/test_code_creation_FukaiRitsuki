@@ -146,6 +146,9 @@ public class Case09 {
 	    //「提出する」ボタンをクリックする
 	    webDriver.findElement(By.cssSelector("button[type='submit']")).click();
 	    
+   	    //レポート登録画面にある「学習項目」表示までの時間確保
+	    visibilityTimeout(By.id("intFieldName_0"), 5);
+	    
 	    //タイトルエビデンス取得
 	    String evidenceTitle = "レポート登録 | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
@@ -175,6 +178,9 @@ public class Case09 {
 	    //「提出する」ボタンをクリックする
 	    webDriver.findElement(By.cssSelector("button[type='submit']")).click();
 	    
+	    //レポート登録画面にある「学習項目」表示までの時間確保
+	    visibilityTimeout(By.id("intFieldName_0"), 5);
+	    
 	    //タイトルエビデンス取得
 	    String evidenceTitle = "レポート登録 | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
@@ -201,6 +207,9 @@ public class Case09 {
 	    
 	    //「提出する」ボタンをクリックする
 	    webDriver.findElement(By.cssSelector("button[type='submit']")).click();
+	    
+	    //レポート登録画面にある「目標の達成度」表示までの時間確保
+	    visibilityTimeout(By.id("content_0"), 5);
 	    
 	    //タイトルエビデンス取得
 	    String evidenceTitle = "レポート登録 | LMS";
@@ -229,6 +238,9 @@ public class Case09 {
 		//「提出する」ボタンをクリックする
 		webDriver.findElement(By.cssSelector("button[type='submit']")).click();
 		
+		//レポート登録画面にある「目標の達成度」表示までの時間確保
+	    visibilityTimeout(By.id("content_0"), 5);
+	    
 		 //タイトルエビデンス取得
 	    String evidenceTitle = "レポート登録 | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
@@ -246,12 +258,12 @@ public class Case09 {
 	@DisplayName("テスト09 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：目標の達成度・所感が未入力")
 	void test09() {
 		//目標の達成度を未入力
-		WebElement inputTextGoal = webDriver.findElement(By.id("content_0"));
-		inputTextGoal.clear();
+		WebElement beforeInputTextGoal = webDriver.findElement(By.id("content_0"));
+		beforeInputTextGoal.clear();
 		
 		//所感を未入力
-		WebElement inputTextImpression = webDriver.findElement(By.id("content_1"));
-	    inputTextImpression.clear();
+		WebElement beforeInputTextImpression = webDriver.findElement(By.id("content_1"));
+	    beforeInputTextImpression.clear();
 	    
 		//「提出する」ボタンは下部にあるためスクロール
 		scrollBy("400");
@@ -259,13 +271,18 @@ public class Case09 {
 		//「提出する」ボタンをクリックする
 		webDriver.findElement(By.cssSelector("button[type='submit']")).click();
 		
+		//レポート登録画面にある「目標の達成度」表示までの時間確保
+	    visibilityTimeout(By.id("content_0"), 5);
+		
 		//タイトルエビデンス取得
 	    String evidenceTitle = "レポート登録 | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
 
 	    //エラー出力エビデンス取得
-	    assertTrue(inputTextGoal.getAttribute("class").contains("errorInput"));
-	    assertTrue(inputTextImpression.getAttribute("class").contains("errorInput"));
+		WebElement afterInputTextGoal = webDriver.findElement(By.id("content_0"));
+		assertTrue(afterInputTextGoal.getAttribute("class").contains("errorInput"));
+		WebElement afterInputTextImpression = webDriver.findElement(By.id("content_1"));
+	    assertTrue(afterInputTextImpression.getAttribute("class").contains("errorInput"));
 	    
 	    //エビデンス証跡取得
 	    getEvidence(new Object(){}, "テスト09");
