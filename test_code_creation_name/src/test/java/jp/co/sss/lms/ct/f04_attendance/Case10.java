@@ -85,6 +85,9 @@ public class Case10 {
 	void test03() {
 		//ヘッダーにある「勤怠」をクリック
 		webDriver.findElement(By.linkText("勤怠")).click();
+		
+		//確認ダイアログで「OK」ボタンをクリック
+		webDriver.switchTo().alert().accept();
 				
 		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
 		visibilityTimeout(By.cssSelector("input[name='punchIn']"), 5);
