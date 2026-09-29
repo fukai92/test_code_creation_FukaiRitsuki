@@ -166,12 +166,12 @@ public class Case09 {
 	@DisplayName("テスト06 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：理解度が未入力")
 	void test06() {
 		// 学習項目にSpringBootテストと入力し理解度には何も記述しない
-	    WebElement intFieldName = webDriver.findElement(By.id("intFieldName_0"));
-	    intFieldName.clear();
-	    intFieldName.sendKeys("SpringBootテスト"); 
+	    
 	    WebElement beforeIntFieldValue = webDriver.findElement(By.id("intFieldValue_0"));
 	    beforeIntFieldValue.sendKeys(Keys.HOME); 
-	    
+	    WebElement beforeIntFieldName = webDriver.findElement(By.id("intFieldName_0"));
+	    beforeIntFieldName.clear();
+	    beforeIntFieldName.sendKeys("SpringBootテスト"); 
 	    //「提出する」ボタンは下部にあるためスクロール
 	    scrollBy("400");
 	    
@@ -191,6 +191,10 @@ public class Case09 {
 	    
 	    //エビデンス証跡取得
 	    getEvidence(new Object(){}, "テスト06");
+	    
+	    //学習項目欄に文字は不要なため削除
+	    WebElement afterIntFieldName = webDriver.findElement(By.id("intFieldName_0"));
+	    afterIntFieldName.clear();
 	}
 
 	@Test
@@ -294,32 +298,37 @@ public class Case09 {
 	void test10() {
 		//所感に「あ」文字を2001字入力
 		String textGoalOver2000 = "あ".repeat(2001);
-		WebElement inputTextGoal = webDriver.findElement(By.id("content_0"));
-		inputTextGoal.clear();
-		inputTextGoal.sendKeys(textGoalOver2000);
+		WebElement beforeInputTextGoal = webDriver.findElement(By.id("content_1"));
+		beforeInputTextGoal.clear();
+		beforeInputTextGoal.sendKeys(textGoalOver2000);
 				
 		//一週間の振り返りに「あ」文字を2001字入力
 		String textReviewOver2000 = "あ".repeat(2001);
-		WebElement inputTextReview = webDriver.findElement(By.id("content_1"));
-		inputTextReview.clear();
-		inputTextReview.sendKeys(textReviewOver2000);
+		WebElement beforeInputTextReview = webDriver.findElement(By.id("content_2"));
+		beforeInputTextReview.clear();
+		beforeInputTextReview.sendKeys(textReviewOver2000);
 			    
 		//「提出する」ボタンは下部にあるためスクロール
 		scrollBy("400");
 							    
 		//「提出する」ボタンをクリックする
 		webDriver.findElement(By.cssSelector("button[type='submit']")).click();
+		
+		//レポート登録画面にある「目標の達成度」表示までの時間確保
+	    visibilityTimeout(By.id("content_0"), 5);
 				
 		//タイトルエビデンス取得
 		String evidenceTitle = "レポート登録 | LMS";
 		assertEquals(evidenceTitle, webDriver.getTitle());
 
-		//エラー出力エビデンス取得
-		assertTrue(inputTextGoal.getAttribute("class").contains("errorInput"));
-		assertTrue(inputTextReview.getAttribute("class").contains("errorInput"));
-		
 		//エラー部分を取得したいため下部へスクロール
-		scrollBy("200");
+		scrollBy("500");
+				
+		//エラー出力エビデンス取得
+		WebElement afterInputTextGoal = webDriver.findElement(By.id("content_1"));
+		assertTrue(afterInputTextGoal.getAttribute("class").contains("errorInput"));
+		WebElement afterInputTextReview = webDriver.findElement(By.id("content_2"));
+		assertTrue(afterInputTextReview.getAttribute("class").contains("errorInput"));
 		
 		//エビデンス証跡取得
 		getEvidence(new Object(){}, "テスト10");
