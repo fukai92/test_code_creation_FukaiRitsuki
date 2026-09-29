@@ -135,17 +135,36 @@ public class Case09 {
 	@Order(5)
 	@DisplayName("テスト05 報告内容を修正して「提出する」ボタンを押下しエラー表示：学習項目が未入力")
 	void test05() {
-		
+		//理解度に3と入力し学習項目には何も記述しない
+		WebElement intFieldValue = webDriver.findElement(By.id("intFieldValue_0"));
+	    intFieldValue.clear();
+	    intFieldValue.sendKeys("3"); 
+	    
+	    //「提出する」ボタンは下部にあるためスクロール
+	    scrollBy("400");
+	    
+	    //「提出する」ボタンをクリックする
+	    webDriver.findElement(By.cssSelector("button[type='submit']")).click();
+	    
+	    //タイトルエビデンス取得
+	    String evidenceTitle = "レポート登録 | LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+
+	    //エラー出力エビデンス取得
+	    assertTrue(intFieldValue.getAttribute("class").contains("errorInput"));
+	    
+	    //エビデンス証跡取得
+	    getEvidence(new Object(){}, "テスト06");
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：理解度が未入力")
 	void test06() {
-		// 学習項目にSpringBootテストと入力し理解度には何も触れない
+		// 学習項目にSpringBootテストと入力し理解度には何も記述しない
 	    WebElement intFieldName = webDriver.findElement(By.id("intFieldName_0"));
 	    intFieldName.clear();
-	    intFieldName.sendKeys("テストSpringBoot基礎講座"); 
+	    intFieldName.sendKeys("SpringBootテスト"); 
 	    
 	    //「提出する」ボタンは下部にあるためスクロール
 	    scrollBy("400");
