@@ -114,8 +114,8 @@ public class Case10 {
 		//確認ダイアログで「OK」ボタンをクリック
 		webDriver.switchTo().alert().accept();
 		
-		//勤怠情報変更画面にある退勤ボタン表示までの時間確保
-		visibilityTimeout(By.cssSelector("input[name='punchOut']"), 5);
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("input[name='punchIn']"), 5);
 		
 		//タイトルエビデンス取得
 		String evidenceTitle = "勤怠情報変更｜LMS";
