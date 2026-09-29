@@ -3,6 +3,8 @@ package jp.co.sss.lms.ct.f04_attendance;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト 勤怠管理機能
@@ -129,7 +132,46 @@ public class Case11 {
 	@Order(5)
 	@DisplayName("テスト05 すべての研修日程の勤怠情報を正しく更新し勤怠管理画面に遷移")
 	void test05() {
-		// TODO ここに追加
+		// 一覧に表示されている全行を取得
+		List<WebElement> rows = webDriver.findElements(By.cssSelector("tbody tr"));
+		
+		//取得した行ごとに「定時」ボタンをクリック
+		for (int i = 0; i < rows.size(); i++) {
+		WebElement defaultBtn = webDriver.findElement(By.cssSelector("button.default-button[value='" + i + "']"));
+		defaultBtn.click();
+		}
+		
+		//「更新」ボタンが下部にあるためスクロール
+		scrollBy("500");
+		
+		//「更新」ボタンをクリック
+		webDriver.findElement(By.cssSelector("input.update-button")).click();
+		
+		//確認ダイアログで「OK」ボタンをクリック
+		webDriver.switchTo().alert().accept();
+		
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("input[name='punchIn']"), 5);
+		
+		//タイトルエビデンス取得
+		String evidenceTitle = "勤怠情報変更｜LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+				
+		//全体を表示したいため少しスクロール
+		scrollBy("50");
+		
+		//出勤表示エビデンス取得
+		WebElement startTime = webDriver.findElement(By.cssSelector("tr.info td:nth-child(3)"));
+		String startTimeEvidence = startTime.getText();
+		assertFalse(startTimeEvidence.isEmpty());
+			    
+		//退勤表示エビデンス取得
+		WebElement endTime = webDriver.findElement(By.cssSelector("tr.info td:nth-child(4)"));
+		String endTimeEvidence = endTime.getText();
+		assertFalse(endTimeEvidence.isEmpty());
+										
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト05");
 	}
 
 }
