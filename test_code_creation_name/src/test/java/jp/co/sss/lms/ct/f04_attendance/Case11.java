@@ -107,7 +107,22 @@ public class Case11 {
 	@Order(4)
 	@DisplayName("テスト04 「勤怠情報を直接編集する」リンクから勤怠情報直接変更画面に遷移")
 	void test04() {
-		// TODO ここに追加
+		//「勤怠情報を直接編集する」をクリック
+		webDriver.findElement(By.linkText("勤怠情報を直接編集する")).click();
+		
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("button.default-button"), 5);
+		
+		//タイトルエビデンス取得
+		String evidenceTitle = "勤怠情報変更｜LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+								
+		//「定時」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("button.default-button")).isDisplayed();
+		assertTrue(evidenceButton);
+								
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト04");
 	}
 
 	@Test
