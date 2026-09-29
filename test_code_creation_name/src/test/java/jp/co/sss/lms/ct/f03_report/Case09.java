@@ -288,6 +288,9 @@ public class Case09 {
 		WebElement afterInputTextImpression = webDriver.findElement(By.id("content_1"));
 	    assertTrue(afterInputTextImpression.getAttribute("class").contains("errorInput"));
 	    
+	    //エラー部分を取得したいため下部へスクロール
+		scrollBy("300");
+	    
 	    //エビデンス証跡取得
 	    getEvidence(new Object(){}, "テスト09");
 	}
@@ -322,7 +325,7 @@ public class Case09 {
 		assertEquals(evidenceTitle, webDriver.getTitle());
 
 		//エラー部分を取得したいため下部へスクロール
-		scrollBy("500");
+		scrollBy("400");
 				
 		//エラー出力エビデンス取得
 		WebElement afterInputTextGoal = webDriver.findElement(By.id("content_1"));
