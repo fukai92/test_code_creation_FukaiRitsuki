@@ -136,8 +136,8 @@ public class Case09 {
 	@DisplayName("テスト05 報告内容を修正して「提出する」ボタンを押下しエラー表示：学習項目が未入力")
 	void test05() {
 		//理解度に3と入力し学習項目には何も記述しない
-		WebElement intFieldValue = webDriver.findElement(By.id("intFieldValue_0"));
-	    intFieldValue.sendKeys("3"); 
+		WebElement beforeIntFieldValue = webDriver.findElement(By.id("intFieldValue_0"));
+	    beforeIntFieldValue.sendKeys("3"); 
 	    
 	    //「提出する」ボタンは下部にあるためスクロール
 	    scrollBy("400");
@@ -150,7 +150,8 @@ public class Case09 {
 		assertEquals(evidenceTitle, webDriver.getTitle());
 
 	    //エラー出力エビデンス取得
-	    assertTrue(intFieldValue.getAttribute("class").contains("errorInput"));
+		WebElement afterIntFieldValue = webDriver.findElement(By.id("intFieldName_0"));
+	    assertTrue(afterIntFieldValue.getAttribute("class").contains("errorInput"));
 	    
 	    //エビデンス証跡取得
 	    getEvidence(new Object(){}, "テスト05");
