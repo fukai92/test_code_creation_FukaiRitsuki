@@ -82,21 +82,73 @@ public class Case10 {
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「勤怠」リンクから勤怠管理画面に遷移")
 	void test03() {
-		// TODO ここに追加
+		//ヘッダーにある「勤怠」をクリック
+		webDriver.findElement(By.linkText("勤怠")).click();
+				
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("input[name='punchIn']"), 5);
+				
+		//タイトルエビデンス取得
+		String evidenceTitle = "勤怠情報変更｜LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+				
+		//「出勤」ボタン表示エビデンス取得
+      	boolean evidenceButton = webDriver.findElement(By.cssSelector("input[name='punchIn']")).isDisplayed();
+      	assertTrue(evidenceButton);
+				
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト03");
 	}
 
 	@Test
 	@Order(4)
 	@DisplayName("テスト04 「出勤」ボタンを押下し出勤時間を登録")
 	void test04() {
-		// TODO ここに追加
+		//出勤ボタンをクリック
+		webDriver.findElement(By.cssSelector("input[name='punchIn']")).click();
+		
+		//確認ダイアログで「OK」ボタンをクリック
+		webDriver.switchTo().alert().accept();
+		
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("input[name='punchIn']"), 5);
+		
+		//タイトルエビデンス取得
+		String evidenceTitle = "勤怠情報変更｜LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+						
+		//「出勤」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[name='punchIn']")).isDisplayed();
+		assertTrue(evidenceButton);
+						
+	    //エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト04");
+		
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 「退勤」ボタンを押下し退勤時間を登録")
 	void test05() {
-		// TODO ここに追加
+		//退勤ボタンをクリック
+		webDriver.findElement(By.cssSelector("input[name='punchOut']")).click();
+				
+		//確認ダイアログで「OK」ボタンをクリック
+	    webDriver.switchTo().alert().accept();
+				
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("input[name='punchIn']"), 5);
+				
+		//タイトルエビデンス取得
+		String evidenceTitle = "勤怠情報変更｜LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+								
+		//「出勤」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("input[name='punchIn']")).isDisplayed();
+		assertTrue(evidenceButton);
+								
+		//エビデンス証跡取得
+		getEvidence(new Object(){}, "テスト05");
 	}
 
 }
