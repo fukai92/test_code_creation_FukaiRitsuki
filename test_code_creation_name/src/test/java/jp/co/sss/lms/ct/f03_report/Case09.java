@@ -192,9 +192,9 @@ public class Case09 {
 	@DisplayName("テスト07 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：目標の達成度が数値以外")
 	void test07() {
 		//目標の達成度に数値以外を記述
-		WebElement inputTextGoal = webDriver.findElement(By.id("content_0"));
-	    inputTextGoal.clear();
-	    inputTextGoal.sendKeys("あいうえお");
+		WebElement beforeInputTextGoal = webDriver.findElement(By.id("content_0"));
+		beforeInputTextGoal.clear();
+		beforeInputTextGoal.sendKeys("あいうえお");
 	    
 	    //「提出する」ボタンは下部にあるためスクロール
 	    scrollBy("400");
@@ -207,7 +207,8 @@ public class Case09 {
 		assertEquals(evidenceTitle, webDriver.getTitle());
 
 	    //エラー出力エビデンス取得
-	    assertTrue(inputTextGoal.getAttribute("class").contains("errorInput"));
+		WebElement afterInputTextGoal = webDriver.findElement(By.id("content_0"));
+	    assertTrue(afterInputTextGoal.getAttribute("class").contains("errorInput"));
 	    
 	    //エビデンス証跡取得
 	    getEvidence(new Object(){}, "テスト07");
@@ -218,9 +219,9 @@ public class Case09 {
 	@DisplayName("テスト08 不適切な内容で修正して「提出する」ボタンを押下しエラー表示：目標の達成度が範囲外")
 	void test08() {
 		//目標の達成度に範囲以外の数値を記述
-		WebElement inputTextGoal = webDriver.findElement(By.id("content_0"));
-		inputTextGoal.clear();
-		inputTextGoal.sendKeys("11");
+		WebElement beforeInputTextGoal = webDriver.findElement(By.id("content_0"));
+		beforeInputTextGoal.clear();
+		beforeInputTextGoal.sendKeys("11");
 			    
 		//「提出する」ボタンは下部にあるためスクロール
 		scrollBy("400");
@@ -233,7 +234,8 @@ public class Case09 {
 		assertEquals(evidenceTitle, webDriver.getTitle());
 
 	    //エラー出力エビデンス取得
-	    assertTrue(inputTextGoal.getAttribute("class").contains("errorInput"));
+		WebElement afterInputTextGoal = webDriver.findElement(By.id("content_0"));
+	    assertTrue(afterInputTextGoal.getAttribute("class").contains("errorInput"));
 	    
 	    //エビデンス証跡取得
 	    getEvidence(new Object(){}, "テスト08");
