@@ -122,7 +122,7 @@ public class Case10 {
 		assertEquals(evidenceTitle, webDriver.getTitle());
 		
 		//テスト当日の日程が下部にあるためスクロール
-		scrollBy("200");
+		scrollBy("100");
 		
 		//出勤表示エビデンス取得
 		WebElement startTime = webDriver.findElement(By.cssSelector("tr.info td:nth-child(3)"));
@@ -152,7 +152,7 @@ public class Case10 {
 		assertEquals(evidenceTitle, webDriver.getTitle());
 		
 		//テスト当日の日程が下部にあるためスクロール
-		scrollBy("200");
+		scrollBy("100");
 								
 		//退勤表示エビデンス取得
 		WebElement endTime = webDriver.findElement(By.cssSelector("tr.info td:nth-child(4)"));
