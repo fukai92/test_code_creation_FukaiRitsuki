@@ -164,7 +164,36 @@ public class Case12 {
 	@Order(6)
 	@DisplayName("テスト06 不適切な内容で修正してエラー表示：出勤が空白で退勤に入力あり")
 	void test06() {
-		// TODO ここに追加
+		// 1行目の出勤を空白にして退勤に入力を行う
+		webDriver.findElement(By.cssSelector("#startHour0 option[value='']")).click();
+		webDriver.findElement(By.cssSelector("#startMinute0 option[value='']")).click();
+		webDriver.findElement(By.cssSelector("#endHour0 option[value='9']")).click();
+		webDriver.findElement(By.cssSelector("#endMinute0 option[value='00']")).click();
+				
+		//更新ボタンが下部にあるためスクロール
+		scrollBy("400");
+
+		// 更新ボタン押下 ＆ ダイアログ処理
+		webDriver.findElement(By.cssSelector("input.update-button")).click();
+		webDriver.switchTo().alert().accept();
+				
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("button.default-button"), 5);
+						
+		//タイトルエビデンス取得
+		String evidenceTitle = "勤怠情報変更｜LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+												
+		//「定時」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("button.default-button")).isDisplayed();
+		assertTrue(evidenceButton);
+
+		// エラーメッセージが表示されることを確認
+		WebElement errorMessage = webDriver.findElement(By.cssSelector("ul .error"));
+		assertTrue(errorMessage.isDisplayed());
+
+		// エビデンス取得
+		getEvidence(new Object(){}, "テスト06");
 	}
 
 	@Test
