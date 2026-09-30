@@ -137,8 +137,10 @@ public class Case12 {
 		//更新ボタンが下部にあるためスクロール
 		scrollBy("400");
 
-		// 更新ボタン押下 ＆ ダイアログ処理
+		//更新ボタンをクリック
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
+		
+		//確認ダイアログで「OK」ボタンをクリック
 		webDriver.switchTo().alert().accept();
 		
 		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
@@ -152,11 +154,11 @@ public class Case12 {
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("button.default-button")).isDisplayed();
 		assertTrue(evidenceButton);
 
-		// エラーメッセージが表示されることを確認
+		//エラーメッセージが表示されることを確認
 		WebElement errorMessage = webDriver.findElement(By.cssSelector("ul .error"));
 		assertTrue(errorMessage.isDisplayed());
 
-		// エビデンス取得
+		//エビデンス取得
 		getEvidence(new Object(){}, "テスト05");
 	}
 
@@ -173,8 +175,10 @@ public class Case12 {
 		//更新ボタンが下部にあるためスクロール
 		scrollBy("400");
 
-		// 更新ボタン押下 ＆ ダイアログ処理
+		//更新ボタンをクリック
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
+				
+		//確認ダイアログで「OK」ボタンをクリック
 		webDriver.switchTo().alert().accept();
 				
 		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
@@ -188,11 +192,11 @@ public class Case12 {
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("button.default-button")).isDisplayed();
 		assertTrue(evidenceButton);
 
-		// エラーメッセージが表示されることを確認
+		//エラーメッセージが表示されることを確認
 		WebElement errorMessage = webDriver.findElement(By.cssSelector("ul .error"));
 		assertTrue(errorMessage.isDisplayed());
 
-		// エビデンス取得
+		//エビデンス取得
 		getEvidence(new Object(){}, "テスト06");
 	}
 
@@ -200,7 +204,7 @@ public class Case12 {
 	@Order(7)
 	@DisplayName("テスト07 不適切な内容で修正してエラー表示：出勤が退勤よりも遅い時間")
 	void test07() {
-		// 1行目の出勤を空白にして退勤に入力を行う
+		// 1行目の出勤時間を「12：00」、退勤時間を「9：00」に指定
 		webDriver.findElement(By.cssSelector("#startHour0 option[value='12']")).click();
 		webDriver.findElement(By.cssSelector("#startMinute0 option[value='00']")).click();
 		webDriver.findElement(By.cssSelector("#endHour0 option[value='9']")).click();
@@ -209,10 +213,12 @@ public class Case12 {
 		//更新ボタンが下部にあるためスクロール
 		scrollBy("400");
 
-		// 更新ボタン押下 ＆ ダイアログ処理
+		//更新ボタンをクリック
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
-		webDriver.switchTo().alert().accept();
 						
+		//確認ダイアログで「OK」ボタンをクリック
+		webDriver.switchTo().alert().accept();
+		
 		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
 		visibilityTimeout(By.cssSelector("button.default-button"), 5);
 								
@@ -224,11 +230,11 @@ public class Case12 {
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("button.default-button")).isDisplayed();
 		assertTrue(evidenceButton);
 
-		// エラーメッセージが表示されることを確認
+		//エラーメッセージが表示されることを確認
 		WebElement errorMessage = webDriver.findElement(By.cssSelector("ul .error"));
 		assertTrue(errorMessage.isDisplayed());
 
-		// エビデンス取得
+		//エビデンス取得
 		getEvidence(new Object(){}, "テスト07");
 	}
 
@@ -236,7 +242,38 @@ public class Case12 {
 	@Order(8)
 	@DisplayName("テスト08 不適切な内容で修正してエラー表示：出退勤時間を超える中抜け時間")
 	void test08() {
-		// TODO ここに追加
+		//1行目の出勤時間を「9：00」、退勤時間を「10：00」に指定
+		webDriver.findElement(By.cssSelector("#startHour0 option[value='9']")).click();
+		webDriver.findElement(By.cssSelector("#startMinute0 option[value='0']")).click();
+		webDriver.findElement(By.cssSelector("#endHour0 option[value='10']")).click();
+		webDriver.findElement(By.cssSelector("#endMinute0 option[value='0']")).click();
+
+		//1行目の中抜け時間を2時間に設定
+		webDriver.findElement(By.cssSelector("select[name='attendanceList[0].blankTime'] option[value='2.0']")).click();
+
+		//更新ボタンをクリック
+		webDriver.findElement(By.cssSelector("input.update-button")).click();
+						
+		//確認ダイアログで「OK」ボタンをクリック
+		webDriver.switchTo().alert().accept();
+		
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("button.default-button"), 5);
+										
+		//タイトルエビデンス取得
+		String evidenceTitle = "勤怠情報変更｜LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+																
+		//「定時」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("button.default-button")).isDisplayed();
+		assertTrue(evidenceButton);
+
+		//エラーメッセージが表示されることを確認
+		WebElement errorMessage = webDriver.findElement(By.cssSelector("ul .error"));
+		assertTrue(errorMessage.isDisplayed());
+
+		//エビデンス取得
+		getEvidence(new Object(){}, "テスト08");
 	}
 
 	@Test
