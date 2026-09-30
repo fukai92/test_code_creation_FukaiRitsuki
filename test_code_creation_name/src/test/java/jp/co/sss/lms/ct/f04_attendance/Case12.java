@@ -140,6 +140,17 @@ public class Case12 {
 		// 更新ボタン押下 ＆ ダイアログ処理
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
 		webDriver.switchTo().alert().accept();
+		
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("button.default-button"), 5);
+				
+		//タイトルエビデンス取得
+		String evidenceTitle = "勤怠情報変更｜LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+										
+		//「定時」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("button.default-button")).isDisplayed();
+		assertTrue(evidenceButton);
 
 		// エラーメッセージが表示されることを確認
 		WebElement errorMessage = webDriver.findElement(By.cssSelector("ul .error"));
