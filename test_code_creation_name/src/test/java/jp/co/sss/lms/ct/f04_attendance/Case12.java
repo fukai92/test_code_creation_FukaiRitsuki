@@ -130,12 +130,12 @@ public class Case12 {
 	@Order(5)
 	@DisplayName("テスト05 不適切な内容で修正してエラー表示：出退勤の（時）と（分）のいずれかが空白")
 	void test05() {
-		// 1行目の「時」だけ選択し、「分」を未選択（空文字）にする
+		// 1行目の出勤「時」だけ選択し、「分」を未選択（空文字）にする
 		webDriver.findElement(By.cssSelector("#startHour0 option[value='9']")).click();
 		webDriver.findElement(By.cssSelector("#startMinute0 option[value='']")).click();
 		
 		//更新ボタンが下部にあるためスクロール
-		scrollBy("300");
+		scrollBy("400");
 
 		// 更新ボタン押下 ＆ ダイアログ処理
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
@@ -185,7 +185,36 @@ public class Case12 {
 	@Order(9)
 	@DisplayName("テスト09 不適切な内容で修正してエラー表示：備考が100文字超")
 	void test09() {
-		// TODO ここに追加
+		//1行目の備考欄に101文字入力
+		String text101 = "あ".repeat(101);
+		WebElement noteInput = webDriver.findElement(By.name("attendanceList[0].note"));
+		noteInput.clear();
+		noteInput.sendKeys(text101);
+		
+		//更新ボタンが下部にあるためスクロール
+		scrollBy("400");
+
+		// 更新ボタン押下 ＆ ダイアログ処理
+		webDriver.findElement(By.cssSelector("input.update-button")).click();
+		webDriver.switchTo().alert().accept();
+		
+		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
+		visibilityTimeout(By.cssSelector("button.default-button"), 5);
+						
+		//タイトルエビデンス取得
+		String evidenceTitle = "勤怠情報変更｜LMS";
+		assertEquals(evidenceTitle, webDriver.getTitle());
+												
+		//「定時」ボタン表示エビデンス取得
+		boolean evidenceButton = webDriver.findElement(By.cssSelector("button.default-button")).isDisplayed();
+		assertTrue(evidenceButton);
+
+		// エラーメッセージが表示されることを確認
+		WebElement errorMessage = webDriver.findElement(By.cssSelector("ul .error"));
+		assertTrue(errorMessage.isDisplayed());
+
+		// エビデンス取得
+		getEvidence(new Object(){}, "テスト09");
 	}
 
 }
