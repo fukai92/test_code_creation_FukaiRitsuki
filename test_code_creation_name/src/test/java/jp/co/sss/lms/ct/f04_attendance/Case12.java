@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト 勤怠管理機能
@@ -129,7 +130,23 @@ public class Case12 {
 	@Order(5)
 	@DisplayName("テスト05 不適切な内容で修正してエラー表示：出退勤の（時）と（分）のいずれかが空白")
 	void test05() {
-		// TODO ここに追加
+		// 1行目の「時」だけ選択し、「分」を未選択（空文字）にする
+		webDriver.findElement(By.cssSelector("#startHour0 option[value='9']")).click();
+		webDriver.findElement(By.cssSelector("#startMinute0 option[value='']")).click();
+		
+		//更新ボタンが下部にあるためスクロール
+		scrollBy("300");
+
+		// 更新ボタン押下 ＆ ダイアログ処理
+		webDriver.findElement(By.cssSelector("input.update-button")).click();
+		webDriver.switchTo().alert().accept();
+
+		// エラーメッセージが表示されることを確認
+		WebElement errorMessage = webDriver.findElement(By.cssSelector("ul .error"));
+		assertTrue(errorMessage.isDisplayed());
+
+		// エビデンス取得
+		getEvidence(new Object(){}, "テスト05");
 	}
 
 	@Test
