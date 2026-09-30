@@ -288,6 +288,9 @@ public class Case12 {
 		webDriver.findElement(By.cssSelector("#startMinute0 option[value='0']")).click();
 		webDriver.findElement(By.cssSelector("#endHour0 option[value='18']")).click();
 		webDriver.findElement(By.cssSelector("#endMinute0 option[value='0']")).click();
+		
+		//1行目の中抜け時間を空白に設定
+		webDriver.findElement(By.cssSelector("select[name='attendanceList[0].blankTime'] option[value='']")).click();
 				
 		//1行目の備考欄に101文字入力
 		String text101 = "あ".repeat(101);
