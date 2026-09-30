@@ -170,7 +170,7 @@ public class Case12 {
 		webDriver.findElement(By.cssSelector("#startHour0 option[value='']")).click();
 		webDriver.findElement(By.cssSelector("#startMinute0 option[value='']")).click();
 		webDriver.findElement(By.cssSelector("#endHour0 option[value='9']")).click();
-		webDriver.findElement(By.cssSelector("#endMinute0 option[value='00']")).click();
+		webDriver.findElement(By.cssSelector("#endMinute0 option[value='0']")).click();
 				
 		//更新ボタンが下部にあるためスクロール
 		scrollBy("400");
@@ -206,9 +206,9 @@ public class Case12 {
 	void test07() {
 		// 1行目の出勤時間を「12：00」、退勤時間を「9：00」に指定
 		webDriver.findElement(By.cssSelector("#startHour0 option[value='12']")).click();
-		webDriver.findElement(By.cssSelector("#startMinute0 option[value='00']")).click();
+		webDriver.findElement(By.cssSelector("#startMinute0 option[value='0']")).click();
 		webDriver.findElement(By.cssSelector("#endHour0 option[value='9']")).click();
-		webDriver.findElement(By.cssSelector("#endMinute0 option[value='00']")).click();
+		webDriver.findElement(By.cssSelector("#endMinute0 option[value='0']")).click();
 						
 		//更新ボタンが下部にあるためスクロール
 		scrollBy("400");
