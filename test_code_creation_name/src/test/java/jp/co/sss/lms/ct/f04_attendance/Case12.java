@@ -134,10 +134,10 @@ public class Case12 {
 		webDriver.findElement(By.cssSelector("#startHour0 option[value='9']")).click();
 		webDriver.findElement(By.cssSelector("#startMinute0 option[value='']")).click();
 		
-		//更新ボタンが下部にあるためスクロール
+		//「更新」ボタンが下部にあるためスクロール
 		scrollBy("400");
 
-		//更新ボタンをクリック
+		//「更新」ボタンをクリック
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
 		
 		//確認ダイアログで「OK」ボタンをクリック
@@ -172,10 +172,10 @@ public class Case12 {
 		webDriver.findElement(By.cssSelector("#endHour0 option[value='9']")).click();
 		webDriver.findElement(By.cssSelector("#endMinute0 option[value='0']")).click();
 				
-		//更新ボタンが下部にあるためスクロール
+		//「更新」ボタンが下部にあるためスクロール
 		scrollBy("400");
 
-		//更新ボタンをクリック
+		//「更新」ボタンをクリック
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
 				
 		//確認ダイアログで「OK」ボタンをクリック
@@ -210,10 +210,10 @@ public class Case12 {
 		webDriver.findElement(By.cssSelector("#endHour0 option[value='9']")).click();
 		webDriver.findElement(By.cssSelector("#endMinute0 option[value='0']")).click();
 						
-		//更新ボタンが下部にあるためスクロール
+		//「更新」ボタンが下部にあるためスクロール
 		scrollBy("400");
 
-		//更新ボタンをクリック
+		//「更新」ボタンをクリック
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
 						
 		//確認ダイアログで「OK」ボタンをクリック
@@ -251,10 +251,10 @@ public class Case12 {
 		//1行目の中抜け時間を2時間に設定
 		webDriver.findElement(By.cssSelector("select[name='attendanceList[0].blankTime'] option[value='120']")).click();
 		
-		//更新ボタンが下部にあるためスクロール
+		//「更新」ボタンが下部にあるためスクロール
 		scrollBy("400");
 
-		//更新ボタンをクリック
+		//「更新」ボタンをクリック
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
 						
 		//確認ダイアログで「OK」ボタンをクリック
@@ -283,17 +283,25 @@ public class Case12 {
 	@Order(9)
 	@DisplayName("テスト09 不適切な内容で修正してエラー表示：備考が100文字超")
 	void test09() {
+		//1行目の出勤時間を「9：00」、退勤時間を「18：00」に指定
+		webDriver.findElement(By.cssSelector("#startHour0 option[value='9']")).click();
+		webDriver.findElement(By.cssSelector("#startMinute0 option[value='0']")).click();
+		webDriver.findElement(By.cssSelector("#endHour0 option[value='18']")).click();
+		webDriver.findElement(By.cssSelector("#endMinute0 option[value='0']")).click();
+				
 		//1行目の備考欄に101文字入力
 		String text101 = "あ".repeat(101);
 		WebElement noteInput = webDriver.findElement(By.name("attendanceList[0].note"));
 		noteInput.clear();
 		noteInput.sendKeys(text101);
 		
-		//更新ボタンが下部にあるためスクロール
+		//「更新」ボタンが下部にあるためスクロール
 		scrollBy("400");
 
-		// 更新ボタン押下 ＆ ダイアログ処理
+		//「更新」ボタンをクリック
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
+								
+	    //確認ダイアログで「OK」ボタンをクリック
 		webDriver.switchTo().alert().accept();
 		
 		//勤怠情報変更画面にある出勤ボタン表示までの時間確保
@@ -307,11 +315,11 @@ public class Case12 {
 		boolean evidenceButton = webDriver.findElement(By.cssSelector("button.default-button")).isDisplayed();
 		assertTrue(evidenceButton);
 
-		// エラーメッセージが表示されることを確認
+		//エラーメッセージが表示されることを確認
 		WebElement errorMessage = webDriver.findElement(By.cssSelector("ul .error"));
 		assertTrue(errorMessage.isDisplayed());
 
-		// エビデンス取得
+		//エビデンス取得
 		getEvidence(new Object(){}, "テスト09");
 	}
 
