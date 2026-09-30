@@ -249,7 +249,10 @@ public class Case12 {
 		webDriver.findElement(By.cssSelector("#endMinute0 option[value='0']")).click();
 
 		//1行目の中抜け時間を2時間に設定
-		webDriver.findElement(By.cssSelector("select[name='attendanceList[0].blankTime'] option[value='2.0']")).click();
+		webDriver.findElement(By.cssSelector("select[name='attendanceList[0].blankTime'] option[value='120']")).click();
+		
+		//更新ボタンが下部にあるためスクロール
+		scrollBy("400");
 
 		//更新ボタンをクリック
 		webDriver.findElement(By.cssSelector("input.update-button")).click();
